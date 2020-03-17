@@ -10,39 +10,43 @@ var quizTitle = document.getElementById("titleCard")
 var description = document.getElementById("gameDescription")
 var finishQuizScreen = document.getElementById("endScreen")
 var finalScore = document.getElementById("totalScore")
+var userSubmit = document.getElementById("submitScore")
+var userName = document.getElementById("name")
+var highscorePage = document.getElementById("highscoreScreen")
 
 var timeLeft = document.getElementById("quizTimer")
+var secondsLeft = 40;
 
 var score = 0;
 //array of questions as objects
 var questionsList = [
     {
-        question: "Who is the oldest member",
+        question: "Who is the oldest member?",
         choice1: "1. Jin",
         choice2: "2. Jungkook",
         choice3: "3. Suga",
         choice4: "4. RM",
         correctAns: "1"
     },{
-        question: "this is a question",
-        choice1: "no",
-        choice2: "yes",
-        choice3: "no",
-        choice4: "no",
+        question: "When did BTS debut?",
+        choice1: "2015",
+        choice2: "2013",
+        choice3: "2018",
+        choice4: "2009",
         correctAns: "2"
     },{
-        question: "this is a question",
-        choice1: "no",
-        choice2: "no",
-        choice3: "yes",
-        choice4: "no",
+        question: "Who is the youngest member?",
+        choice1: "Jimin",
+        choice2: "Hoseok",
+        choice3: "Jungkook",
+        choice4: "Taehyung",
         correctAns: "3"
     },{
-        question: "this is a question",
-        choice1: "no",
-        choice2: "no",
-        choice3: "no",
-        choice4: "yes",
+        question: "What entertainment company owns BTS?",
+        choice1: "YG ent.",
+        choice2: "Starship ent.",
+        choice3: "Jellyfish ent.",
+        choice4: "BigHit ent.",
         correctAns: "4"
     }
 ];
@@ -52,6 +56,7 @@ function startQuiz(){
     quizEl.classList.remove("hide")
     description.classList.add("hide")
     quizTitle.classList.add("hide")
+    quizTime()
     nextQuestion()
 }
 // set the first question index to 0 (outside so that functions can add on and not reset)
@@ -73,10 +78,8 @@ function nextQuestion(){
 //function to check if the choice was correct
 function checkCorrect(buttonPressed){
     if (buttonPressed === questionsList[currentQuestionNum].correctAns){
-        score++;
         correctAnswer();
     } else{
-        score--;
         wrongAnswer();
     }
     if (currentQuestionNum < endQuiz){
@@ -84,20 +87,53 @@ function checkCorrect(buttonPressed){
         nextQuestion();
     } else {
         finishQuizScreen.classList.remove("hide")
+        quizEl.classList.add("hide")
         finalScore.textContent = score;
-
     }
 
 }
 
-
+//subtract from score
 function wrongAnswer(){
-    console.log("incorrect")
-    console.log(score)
+    score--;
+    secondsLeft = secondsLeft - 10;
 }
+//add to score
 function correctAnswer(){
-    console.log("correct")
+    score++;
 }
+function quizTime(){
+    var timerInterval = setInterval(function(){
+        secondsLeft--
+        timeLeft.textContent = "time: " + secondsLeft;
 
+        }
+        if(secondsLeft <= 0){
+            clearInterval(timerInterval);
+            secondsLeft = 0;
+            finishQuizScreen.classList.remove("hide")
+            quizEl.classList.add("hide")
+            finalScore.textContent = score;
+        }
+        
+    }, 1000)
+}
+userSubmit.addEventListener("click", function(event){
+    event.preventDefault();
+
+    var user = {
+        name: userName.value.trim(),
+        score: score
+    }
+
+    console.log(score)
+    if (userName === ""){
+        displayMessage("please enter a name")
+    }
+    localStorage.setItem("user",JSON.stringify(user))
+
+    finishQuizScreen.classList.add("hide")
+    highscorePage.classList.remove("hide")
+})
 
 starButtonEl.addEventListener("click",startQuiz)
