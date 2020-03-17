@@ -107,7 +107,7 @@ function quizTime(){
         secondsLeft--
         timeLeft.textContent = "time: " + secondsLeft;
 
-        }
+        
         if(secondsLeft <= 0){
             clearInterval(timerInterval);
             secondsLeft = 0;
