@@ -150,7 +150,7 @@ userSubmit.addEventListener("click", function(event){
         displayMessage("please enter a name")
     }
     userArr.push(user);
-    localStorage.setItem("user",JSON.stringify(user))
+    localStorage.setItem("user",JSON.stringify(userArr))
     highscore()
     renderHighscores()
     userName.value = "";
@@ -184,13 +184,22 @@ function renderHighscores(){
     while(highscoreList.firstChild){
         highscoreList.removeChild(highscoreList.firstChild)
     }
-    var listItems = document.createElement("li")
-    var prevHighscore = JSON.parse(localStorage.getItem("user"))
-    listItems.textContent = prevHighscore.name + " - " + prevHighscore.score
-    highscoreList.appendChild(listItems)
+
+    for (i=0; i<userArr.length; i++){
+        var userInfo = userArr[i]
+
+        var li = document.createElement("li")
+        li.textContent = userInfo.name + " - " + userInfo.score
+        highscoreList.appendChild(li);
+    }
 }
 
 // highscore tab on the top right will trigger the highscore function (brings you to the highscore screen)
 highscoreTab.addEventListener("click", highscore)
 // start quiz button will start the startQuiz function (starts the screen by hiding the start screen and revealing the quiz)
 starButtonEl.addEventListener("click",startQuiz)
+
+// var listItems = document.createElement("li")
+// var prevHighscore = JSON.parse(localStorage.getItem("user"))
+// listItems.textContent = prevHighscore.name + " - " + prevHighscore.score
+// highscoreList.appendChild(listItems)
