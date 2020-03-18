@@ -16,7 +16,7 @@ var highscorePage = document.getElementById("highscoreScreen")
 var highscoreTab = document.getElementById("highscoreLink")
 var returnButton = document.getElementById("return")
 var clearButton = document.getElementById("clear")
-
+var highscoreList = document.getElementById("list")
 
 
 var timeLeft = document.getElementById("quizTimer")
@@ -168,11 +168,16 @@ returnButton.addEventListener("click", function(){
 })
 // button to clear the highscore array
 clearButton.addEventListener("click", function(){
+    while(highscoreList.firstChild){
+        highscoreList.removeChild(highscoreList.firstChild)
+    }
     localStorage.clear();
 })
 
 function renderHighscores(){ 
-    var highscoreList = document.getElementById("list")
+    while(highscoreList.firstChild){
+        highscoreList.removeChild(highscoreList.firstChild)
+    }
     var listItems = document.createElement("li")
     var prevHighscore = JSON.parse(localStorage.getItem("user"))
     listItems.textContent = prevHighscore.name + " - " + prevHighscore.score
