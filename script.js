@@ -13,9 +13,14 @@ var finalScore = document.getElementById("totalScore")
 var userSubmit = document.getElementById("submitScore")
 var userName = document.getElementById("name")
 var highscorePage = document.getElementById("highscoreScreen")
+var highscoreTab = document.getElementById("highscoreLink")
+var returnButton = document.getElementById("return")
+var clearButton = document.getElementById("clear")
+
+
 
 var timeLeft = document.getElementById("quizTimer")
-var secondsLeft = 40;
+var secondsLeft = 30;
 
 var score = 0;
 //array of questions as objects
@@ -86,6 +91,7 @@ function checkCorrect(buttonPressed){
         currentQuestionNum++;
         nextQuestion();
     } else {
+        currentQuestionNum++;
         finishQuizScreen.classList.remove("hide")
         quizEl.classList.add("hide")
         finalScore.textContent = score;
@@ -102,11 +108,20 @@ function wrongAnswer(){
 function correctAnswer(){
     score++;
 }
+//timer that will go down every second and when the timer hits 0 it will change to the game over page
 function quizTime(){
+    secondsLeft = 30;
     var timerInterval = setInterval(function(){
+        
         secondsLeft--
         timeLeft.textContent = "time: " + secondsLeft;
-
+        if(currentQuestionNum  > 3){
+            clearInterval(timerInterval)
+            timeLeft.textContent = "time: " +secondsLeft;
+            finishQuizScreen.classList.remove("hide")
+            quizEl.classList.add("hide")
+            finalScore.textContent = score;
+        }
         
         if(secondsLeft <= 0){
             clearInterval(timerInterval);
@@ -118,6 +133,7 @@ function quizTime(){
         
     }, 1000)
 }
+// when the user sumbits a name it will add it into an array as an object with the name and score
 userSubmit.addEventListener("click", function(event){
     event.preventDefault();
 
@@ -126,14 +142,44 @@ userSubmit.addEventListener("click", function(event){
         score: score
     }
 
-    console.log(score)
     if (userName === ""){
         displayMessage("please enter a name")
     }
     localStorage.setItem("user",JSON.stringify(user))
-
+    highscore()
+    renderHighscores()
+})
+// function that makes it go into the highscore screen
+function highscore(){
+    quizEl.classList.add("hide")
     finishQuizScreen.classList.add("hide")
     highscorePage.classList.remove("hide")
+    starButtonEl.classList.add("hide")
+    description.classList.add("hide")
+    quizTitle.classList.add("hide")
+    renderHighscores()
+}
+// button on the highscore page to return to the main screen
+returnButton.addEventListener("click", function(){
+    highscorePage.classList.add("hide")
+    starButtonEl.classList.remove("hide")
+    description.classList.remove("hide")
+    quizTitle.classList.remove("hide")
+})
+// button to clear the highscore array
+clearButton.addEventListener("click", function(){
+    localStorage.clear();
 })
 
+function renderHighscores(){ 
+    var highscoreList = document.getElementById("list")
+    var listItems = document.createElement("li")
+    var prevHighscore = JSON.parse(localStorage.getItem("user"))
+    listItems.textContent = prevHighscore.name + " - " + prevHighscore.score
+    highscoreList.appendChild(listItems)
+}
+
+// highscore tab on the top right will trigger the highscore function (brings you to the highscore screen)
+highscoreTab.addEventListener("click", highscore)
+// start quiz button will start the startQuiz function (starts the screen by hiding the start screen and revealing the quiz)
 starButtonEl.addEventListener("click",startQuiz)

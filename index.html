@@ -14,7 +14,7 @@
     <!-- using a nav bar but with just one link and a spot for the timer -->
     <nav class="navbar navbar-expand-lg navbar-white bg-white">
         <!-- highscore link -->
-        <a class="navbar-item" href="highscore.html">Highscore</a>
+        <a id="highscoreLink">View Highscore</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
             <!-- makes the timer on the far right -->
           
@@ -37,7 +37,6 @@
                 <br>
                 <button class="choice" id="4" onclick="checkCorrect('4')"></button>
             </div>
-
         </div>
 
         <div id="endScreen" class="hide">
@@ -52,8 +51,9 @@
 
         <div id="highscoreScreen" class="hide">
             <h1>Highscores</h1>
-            <ol id=list></ol>
-
+            <ul id=list></ul>
+            <button id="return">Go Back</button>
+            <button id="clear">Clear Highscores</button>
         </div>
     </div>
 
