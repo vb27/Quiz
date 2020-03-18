@@ -23,6 +23,8 @@ var timeLeft = document.getElementById("quizTimer")
 var secondsLeft = 30;
 
 var score = 0;
+
+var userArr = [];
 //array of questions as objects
 var questionsList = [
     {
@@ -61,6 +63,8 @@ function startQuiz(){
     quizEl.classList.remove("hide")
     description.classList.add("hide")
     quizTitle.classList.add("hide")
+    currentQuestionNum = 0;
+    score = 0;
     quizTime()
     nextQuestion()
 }
@@ -125,7 +129,7 @@ function quizTime(){
         
         if(secondsLeft <= 0){
             clearInterval(timerInterval);
-            secondsLeft = 0;
+            timeLeft.textContent = "time: 0"
             finishQuizScreen.classList.remove("hide")
             quizEl.classList.add("hide")
             finalScore.textContent = "Your final score: " + score;
@@ -145,9 +149,11 @@ userSubmit.addEventListener("click", function(event){
     if (userName === ""){
         displayMessage("please enter a name")
     }
+    userArr.push(user);
     localStorage.setItem("user",JSON.stringify(user))
     highscore()
     renderHighscores()
+    userName.value = "";
 })
 // function that makes it go into the highscore screen
 function highscore(){
