@@ -177,6 +177,7 @@ clearButton.addEventListener("click", function(){
     while(highscoreList.firstChild){
         highscoreList.removeChild(highscoreList.firstChild)
     }
+    userArr = [];
     localStorage.clear();
 })
 
