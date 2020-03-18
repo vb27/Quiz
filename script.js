@@ -94,7 +94,7 @@ function checkCorrect(buttonPressed){
         currentQuestionNum++;
         finishQuizScreen.classList.remove("hide")
         quizEl.classList.add("hide")
-        finalScore.textContent = score;
+        finalScore.textContent = "Your final score: " + score;
     }
 
 }
@@ -120,7 +120,7 @@ function quizTime(){
             timeLeft.textContent = "time: " +secondsLeft;
             finishQuizScreen.classList.remove("hide")
             quizEl.classList.add("hide")
-            finalScore.textContent = score;
+            finalScore.textContent = "Your final score: " + score;
         }
         
         if(secondsLeft <= 0){
@@ -128,7 +128,7 @@ function quizTime(){
             secondsLeft = 0;
             finishQuizScreen.classList.remove("hide")
             quizEl.classList.add("hide")
-            finalScore.textContent = score;
+            finalScore.textContent = "Your final score: " + score;
         }
         
     }, 1000)

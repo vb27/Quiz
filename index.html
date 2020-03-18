@@ -41,8 +41,9 @@
 
         <div id="endScreen" class="hide">
             <h1>Game Over!</h1>
+            <div id="totalScore"></div>
             <form method="POST">
-            enter name<input type="name" name="userName" id="name" placeholder="name here" />
+            <input type="name" name="userName" id="name" placeholder="enter name here" />
             <button id="submitScore">submit</button>
             </form>
             <div id="totalScore"></div>
@@ -51,7 +52,7 @@
 
         <div id="highscoreScreen" class="hide">
             <h1>Highscores</h1>
-            <ul id=list></ul>
+            <ol id=list></ol>
             <button id="return">Go Back</button>
             <button id="clear">Clear Highscores</button>
         </div>
